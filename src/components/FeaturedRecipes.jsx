@@ -1,0 +1,91 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { FaClock } from "react-icons/fa";
+import { IoSparkles } from "react-icons/io5";
+
+const FeaturedRecipes = () => {
+  const recipes = [
+    {
+      id: 1,
+      name: "Creamy Garlic Pasta",
+      category: "Italian Cuisine",
+      time: "20 Min",
+      image:
+        "https://images.unsplash.com/photo-1621668180247-495201421689?auto=format&fit=crop&q=80&w=500",
+    },
+    {
+      id: 2,
+      name: "Butter Chicken",
+      category: "Indian Cuisine",
+      time: "40 Min",
+      image:
+        "https://images.unsplash.com/photo-1588166524941-3bf31a98e723?auto=format&fit=crop&q=80&w=500",
+    },
+    {
+      id: 3,
+      name: "Spicy Tacos",
+      category: "Mexican Cuisine",
+      time: "25 Min",
+      image:
+        "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?auto=format&fit=crop&q=80&w=500",
+    },
+    {
+      id: 4,
+      name: "Chocolate Lava Cake",
+      category: "Dessert",
+      time: "40 Min",
+      image:
+        "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&q=80&w=500",
+    },
+  ];
+
+  return (
+    <section className="py-12 bg-white dark:bg-bg-dark transition-colors duration-300">
+      <div className="page-container">
+        <div className="flex items-center justify-between mb-8 px-2">
+          <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2 text-gray-900 dark:text-white">
+            <IoSparkles className="text-orange-400" size={40} />
+            Featured Recipes
+          </h2>
+          <Link
+            href="/browse"
+            className="text-[12px] md:text-sm font-semibold text-primary bg-primary/10 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-all duration-300 shrink-0"
+          >
+            View All
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {recipes.map((recipe) => (
+            <div
+              key={recipe.id}
+              className="bg-white dark:bg-[#1e2030] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-md transition-all duration-300"
+            >
+              <div className="relative h-48 w-full mb-4 overflow-hidden rounded-xl">
+                <Image
+                  src={recipe.image}
+                  alt={recipe.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
+              </div>
+              <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-1">
+                {recipe.name}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                {recipe.category}
+              </p>
+              <div className="flex items-center text-xs text-gray-400 gap-1">
+                <FaClock /> <span>{recipe.time}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default FeaturedRecipes;
