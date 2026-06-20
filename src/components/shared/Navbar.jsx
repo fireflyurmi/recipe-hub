@@ -20,7 +20,7 @@ const Navbar = () => {
     <nav className="bg-bg-light dark:bg-bg-dark shadow-md transition-colors duration-300 border-b border-gray-100 dark:border-gray-800 relative z-50">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-1">
           <Image src="/logo.png" alt="Logo" width={40} height={40} />
           <span className="text-2xl font-bold text-primary">
             Recipe<span className="text-red-700">Hub</span>

@@ -17,9 +17,9 @@ const Footer = () => {
           
           {/* Logo */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <Image src="/logo.png" alt="RecipeHub Logo" width={40} height={40} />
-              <span className="text-2xl font-bold text-primary">
+            <Link href="/" className="flex items-center gap-1 mb-4">
+              <Image src="/logo.png" alt="RecipeHub Logo" width={60} height={60} />
+              <span className="text-4xl font-bold text-primary">
                 Recipe<span className="text-red-700">Hub</span>
               </span>
             </Link>
