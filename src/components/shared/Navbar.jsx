@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
-
+  
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Browse Recipes", path: "/browse" },
@@ -17,8 +17,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-bg-light dark:bg-bg-dark shadow-md transition-colors duration-300 border-b border-gray-100 dark:border-gray-800 relative z-50">
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+    <nav className="bg-bg-light dark:bg-bg-dark shadow-md border-b border-gray-100 dark:border-gray-800 relative z-50">
+      <div className="page-container h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-1">
           <Image src="/logo.png" alt="Logo" width={40} height={40} />
@@ -49,7 +49,7 @@ const Navbar = () => {
           <ThemeToggle />
           <Link
             href="/login"
-            className="text-primary border border-primary bg-transparent px-5 py-2 rounded text-sm font-medium hover:bg-primary hover:text-white transition"
+            className="text-primary border border-primary px-5 py-2 rounded text-sm font-medium hover:bg-primary hover:text-white transition"
           >
             Login
           </Link>

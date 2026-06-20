@@ -12,11 +12,9 @@ const Footer = () => {
 
   return (
     <footer className="bg-bg-light dark:bg-bg-dark border-t border-gray-200 dark:border-gray-800 transition-colors duration-300 py-12">
-      <div className="container mx-auto px-6">
+      <div className="page-container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          
-          {/* Logo */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 pr-8">
             <Link href="/" className="flex items-center gap-1 mb-4">
               <Image src="/logo.png" alt="RecipeHub Logo" width={60} height={60} />
               <span className="text-4xl font-bold text-primary">
@@ -34,9 +32,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Links Columns */}
           {footerSections.map((section) => (
-            <div key={section.title}>
+            <div key={section.title} className="lg:col-span-1">
               <h4 className="font-bold text-gray-900 dark:text-white mb-4">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link) => (
@@ -51,7 +48,6 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Copyright */}
         <div className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-6 text-center text-gray-500 text-sm">
           © {new Date().getFullYear()} RecipeHub. All rights reserved.
         </div>

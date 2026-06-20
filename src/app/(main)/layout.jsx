@@ -3,9 +3,10 @@ import Footer from "@/components/shared/Footer";
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-white dark:bg-[#111827]">
+    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-bg-light dark:bg-bg-dark">
       <Navbar />
-      <main className="grow container mx-auto px-4 md:px-8 py-8">
+      {/* Changed class to 'page-container' for consistent width alignment */}
+      <main className="grow w-full page-container py-8">
         {children}
       </main>
       <Footer />

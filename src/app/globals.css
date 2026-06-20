@@ -8,12 +8,18 @@
   --color-bg-dark: #111827;
   --color-text-light: #1f2937;
   --color-text-dark: #f3f4f6;
-
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
   body {
     @apply bg-bg-light dark:bg-bg-dark text-text-light dark:text-text-dark transition-colors duration-300;
+  }
+}
+
+@layer components {
+  /* This creates a consistent max-width and padding for all sections */
+  .page-container {
+    @apply w-full max-w-7xl mx-auto px-6;
   }
 }
