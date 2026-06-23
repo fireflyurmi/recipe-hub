@@ -24,7 +24,7 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await authClient.signIn.email({
+      const { error } = await authClient.signIn.email({
         email,
         password,
         fetchOptions: {
@@ -41,6 +41,18 @@ const LoginPage = () => {
     } catch (err) {
       toast.error("An unexpected error occurred. Please try again later.");
       setLoading(false);
+    }
+  };
+
+  // Google Login Handler
+  const handleGoogleLogin = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (error) {
+      toast.error("Google Sign-In failed. Please ensure the backend is configured.");
     }
   };
 
@@ -92,7 +104,11 @@ const LoginPage = () => {
             
             <div className="text-center text-gray-400 text-sm py-2">OR</div>
             
-            <button type="button" className="w-full flex items-center justify-center gap-3 border dark:border-gray-700 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-[1.02] transition-all duration-300">
+            <button 
+              type="button" 
+              onClick={handleGoogleLogin}
+              className="w-full flex items-center justify-center gap-3 border dark:border-gray-700 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-[1.02] transition-all duration-300"
+            >
               <FcGoogle size={22} /> Continue with Google
             </button>
           </form>

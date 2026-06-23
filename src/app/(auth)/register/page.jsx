@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { authClient } from '@/lib/auth-client';
-import chefImage from '../../../assets/chef.png';
+import chefImage from '../../../assets/chef-2.png';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -35,11 +35,23 @@ const RegisterPage = () => {
     }
   };
 
+  // Google Signup Handler
+  const handleGoogleSignup = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (error) {
+      toast.error("Google Sign-Up failed. Please ensure the backend is configured.");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0b101a] p-4 py-12">
       <div className="flex flex-col lg:flex-row w-full max-w-5xl bg-purple-50 dark:bg-[#161a29] rounded-3xl shadow-2xl overflow-hidden min-h-150">
         <div className="w-full lg:w-1/2 relative bg-purple-50 dark:bg-[#161a29] h-64 lg:h-auto">
-          <Image src={chefImage} alt="Chef" fill className="object-contain" priority />
+          <Image src={chefImage} alt="Chef" fill className="object-cover" priority />
         </div>
         
         <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center">
@@ -58,7 +70,6 @@ const RegisterPage = () => {
               </button>
             </div>
             
-            {/* Password Rules */}
             <div className="text-xs text-gray-500 dark:text-gray-400 px-1 space-y-1">
               <p className="font-semibold">Password must include:</p>
               <ul className="list-disc pl-5 space-y-0.5">
@@ -72,7 +83,11 @@ const RegisterPage = () => {
               Create Account
             </button>
             <div className="text-center text-gray-400 text-sm py-2">OR</div>
-            <button type="button" className="w-full flex items-center justify-center gap-3 border dark:border-gray-700 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-[1.02] transition-all duration-300">
+            <button 
+              type="button" 
+              onClick={handleGoogleSignup}
+              className="w-full flex items-center justify-center gap-3 border dark:border-gray-700 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-[1.02] transition-all duration-300"
+            >
               <FcGoogle size={22} /> Sign up with Google
             </button>
           </form>
