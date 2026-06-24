@@ -25,6 +25,12 @@ const RegisterPage = () => {
       password: formData.password,
       name: formData.name,
       image: formData.image,
+      
+      additionalFields: {
+        role: "user",
+        isPremium: false,
+        isBlocked: false,
+      },
     });
 
     if (error) {
@@ -35,7 +41,6 @@ const RegisterPage = () => {
     }
   };
 
-  // Google Signup Handler
   const handleGoogleSignup = async () => {
     try {
       await authClient.signIn.social({
@@ -59,12 +64,35 @@ const RegisterPage = () => {
           <p className="text-gray-500 dark:text-gray-400 mt-2 mb-8">Join our community of food lovers</p>
           
           <form onSubmit={handleRegister} className="space-y-4">
-            <input type="text" placeholder="Full Name" onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full p-3 bg-purple-50 dark:bg-[#0b101a] border dark:border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white" required />
-            <input type="email" placeholder="Email Address" onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full p-3 bg-purple-50 dark:bg-[#0b101a] border dark:border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white" required />
-            <input type="url" placeholder="Image URL" onChange={(e) => setFormData({...formData, image: e.target.value})} className="w-full p-3 bg-purple-50 dark:bg-[#0b101a] border dark:border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white" />
+            <input 
+              type="text" 
+              placeholder="Full Name" 
+              onChange={(e) => setFormData({...formData, name: e.target.value})} 
+              className="w-full p-3 bg-purple-50 dark:bg-[#0b101a] border dark:border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white" 
+              required 
+            />
+            <input 
+              type="email" 
+              placeholder="Email Address" 
+              onChange={(e) => setFormData({...formData, email: e.target.value})} 
+              className="w-full p-3 bg-purple-50 dark:bg-[#0b101a] border dark:border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white" 
+              required 
+            />
+            <input 
+              type="url" 
+              placeholder="Image URL" 
+              onChange={(e) => setFormData({...formData, image: e.target.value})} 
+              className="w-full p-3 bg-purple-50 dark:bg-[#0b101a] border dark:border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white" 
+            />
             
             <div className="relative">
-              <input type={showPassword ? "text" : "password"} placeholder="Password" onChange={(e) => setFormData({...formData, password: e.target.value})} className="w-full p-3 bg-purple-50 dark:bg-[#0b101a] border dark:border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white" required />
+              <input 
+                type={showPassword ? "text" : "password"} 
+                placeholder="Password" 
+                onChange={(e) => setFormData({...formData, password: e.target.value})} 
+                className="w-full p-3 bg-purple-50 dark:bg-[#0b101a] border dark:border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white" 
+                required 
+              />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-3.5 text-gray-400">
                 {showPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
               </button>
