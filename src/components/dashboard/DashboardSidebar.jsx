@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IoStatsChart, IoBook, IoAddCircle, IoHeart, IoBag, IoPerson, IoPeople, IoDocumentText, IoWallet, IoSettings, IoClose } from 'react-icons/io5';
 import { FaCrown } from 'react-icons/fa';
-
+import { BiSolidPurchaseTag } from "react-icons/bi";
 const menuConfig = {
   user: [
     { name: 'Overview', path: '/dashboard/user', icon: IoStatsChart },
     { name: 'My Recipes', path: '/dashboard/user/my-recipes', icon: IoBook },
     { name: 'Add Recipe', path: '/dashboard/user/add-recipe', icon: IoAddCircle },
     { name: 'My Favorites', path: '/dashboard/user/my-favorites', icon: IoHeart },
-    { name: 'Purchased Recipes', path: '/dashboard/user/purchased-recipes', icon: IoBag },
+    { name: 'Purchased Recipes', path: '/dashboard/user/purchased-recipes', icon: BiSolidPurchaseTag },
     { name: 'Premium', path: '/dashboard/user/premium', icon: FaCrown },
     { name: 'Profile', path: '/dashboard/user/profile', icon: IoPerson },
   ],
