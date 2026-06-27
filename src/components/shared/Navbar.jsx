@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
-import { authClient } from "@/lib/auth-client"; 
+import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 import { VscSignOut, VscSignIn } from "react-icons/vsc";
 import { SiGnuprivacyguard } from "react-icons/si";
@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  
+
   // Session status
   const { data: session } = authClient.useSession();
   const isActive = (path) => pathname === path;
@@ -25,10 +25,16 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  // Dynamic dashboard path logic
+  const getDashboardPath = () => {
+    if (!session?.user) return "/login";
+    return session.user.role === "admin" ? "/dashboard/admin" : "/dashboard/user";
+  };
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Browse Recipes", path: "/browse" },
-    { name: "Dashboard", path: "/dashboard" },
+    { name: "Dashboard", path: getDashboardPath() },
   ];
 
   return (
@@ -42,7 +48,15 @@ const Navbar = () => {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <Link key={link.name} href={link.path} className={`text-sm font-medium transition-colors ${isActive(link.path) ? "text-primary border-b-2 border-primary pb-1" : "text-gray-600 dark:text-gray-300 hover:text-primary"}`}>
+            <Link 
+              key={link.name} 
+              href={link.path} 
+              className={`text-sm font-medium transition-colors ${
+                isActive(link.path) 
+                  ? "text-primary border-b-2 border-primary pb-1" 
+                  : "text-gray-600 dark:text-gray-300 hover:text-primary"
+              }`}
+            >
               {link.name}
             </Link>
           ))}
@@ -78,9 +92,13 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-bg-light dark:bg-bg-dark border-b p-6 flex flex-col gap-6">
+          {navLinks.map((link) => (
+            <Link key={link.name} href={link.path} onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 dark:text-gray-300 font-medium">
+              {link.name}
+            </Link>
+          ))}
           {session ? (
             <div className="flex items-center gap-3">
-              <Image src={session.user.image || "/default-avatar.png"} alt="User" width={40} height={40} className="rounded-full" />
               <button onClick={handleLogout} className="flex items-center gap-2 text-red-600"><VscSignOut /> Logout</button>
             </div>
           ) : (
