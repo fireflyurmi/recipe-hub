@@ -1,14 +1,11 @@
-import React from "react";
-import { redirect } from "next/navigation";
 import { stripe } from "@/lib/stripe";
+import { redirect } from "next/navigation";
 import { FaCheckCircle } from "react-icons/fa";
-import Link from "next/link";
 
-export default async function SuccessPage({ searchParams }) {
+export default async function PaymentSuccessPage({ searchParams }) {
   const { session_id } = await searchParams;
   if (!session_id) redirect("/");
 
-  
   const session = await stripe.checkout.sessions.retrieve(session_id);
 
   if (session.status === "complete") {
@@ -19,22 +16,24 @@ export default async function SuccessPage({ searchParams }) {
         userEmail: session.metadata.userEmail,
         userId: session.metadata.userId,
         amount: session.amount_total / 100,
-        transactionId: session.id,
+        recipeId: session.metadata.recipeId,
+        transactionId: session.payment_intent,
         paymentStatus: "paid",
-        paymentType: "subscription" 
       }),
     });
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0f121e] p-4">
-      <div className="bg-white dark:bg-[#161a29] rounded-3xl shadow-2xl p-8 text-center border border-gray-100 dark:border-gray-800">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center p-10 bg-white shadow-xl rounded-2xl">
         <FaCheckCircle className="text-5xl text-green-500 mx-auto mb-4" />
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Welcome to Premium!</h1>
-        <p className="mb-8 text-gray-500">Your account is now upgraded.</p>
-        <Link href="/dashboard/user" className="bg-purple-600 text-white px-8 py-3 rounded-xl font-bold">
+        <h1 className="text-2xl font-bold">Payment Successful!</h1>
+        <a
+          href="/dashboard/user"
+          className="mt-4 block bg-purple-600 text-white py-2 px-6 rounded-lg"
+        >
           Go to Dashboard
-        </Link>
+        </a>
       </div>
     </div>
   );

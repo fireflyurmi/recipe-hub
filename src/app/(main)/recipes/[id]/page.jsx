@@ -4,7 +4,7 @@ import RecipeActions from "./RecipeActions";
 async function getRecipe(id) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URI}/recipes/${id}`,
-    { cache: "no-store" }
+    { cache: "no-store" },
   );
   if (!res.ok) throw new Error("Failed to fetch recipe");
   return res.json();
@@ -14,11 +14,10 @@ export default async function RecipeDetailsPage({ params }) {
   const { id } = await params;
   const recipe = await getRecipe(id);
 
-  // ingredients স্ট্রিং থেকে অ্যারেতে রূপান্তরের লজিক
-  const ingredientsList = Array.isArray(recipe.ingredients) 
-    ? recipe.ingredients 
-    : typeof recipe.ingredients === 'string' 
-      ? recipe.ingredients.split('\n').filter(i => i.trim() !== '') 
+  const ingredientsList = Array.isArray(recipe.ingredients)
+    ? recipe.ingredients
+    : typeof recipe.ingredients === "string"
+      ? recipe.ingredients.split("\n").filter((i) => i.trim() !== "")
       : [];
 
   return (
@@ -36,9 +35,12 @@ export default async function RecipeDetailsPage({ params }) {
               />
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold mt-6">{recipe.recipeName}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mt-6">
+              {recipe.recipeName}
+            </h1>
             <p className="text-gray-500 mt-2">
-              {recipe.cuisineType} | {recipe.category} | {recipe.preparationTime || "N/A"}
+              {recipe.cuisineType} | {recipe.category} |{" "}
+              {recipe.preparationTime || "N/A"}
             </p>
 
             <div className="mt-8">
@@ -64,9 +66,15 @@ export default async function RecipeDetailsPage({ params }) {
                 </li>
               ))}
             </ul>
-            <button className="w-full mt-8 bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition">
-              Buy Recipe - ${recipe.price ? parseFloat(recipe.price).toFixed(2) : "0"}
-            </button>
+            <form action={ '/api/payment' } method="POST">
+              <input type="hidden"  name="price" value={recipe.price} />
+              <input type="hidden"  name="title" value={recipe.recipeName} />
+              <input type="hidden"  name="recipeId" value={recipe._id} />
+              <button type="submit" className="w-full mt-8 bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition">
+                Buy Recipe - $
+                {recipe.price ? parseFloat(recipe.price).toFixed(2) : "0"}
+              </button>
+            </form>
           </div>
         </div>
       </div>
