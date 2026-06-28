@@ -46,7 +46,7 @@ const UserDashboardOverviewPage = () => {
                 <GiImperialCrown className="text-yellow-400" size={40} />
               </motion.div>
             )}
-            {isPremium ? "You are a Premium Member" : "Please Subscribe to be a Premium Member"}
+            {isPremium ? "You are a Premium Member" : "Purchase PRO Plan to be a Premium Member"}
           </h2>
           <p className="opacity-90 text-sm md:text-base">
             Enjoy unlimited recipes and exclusive features.

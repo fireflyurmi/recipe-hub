@@ -19,7 +19,6 @@ const AddRecipePage = () => {
     url: "",
   });
 
-  // Inside AddRecipePage component
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -49,6 +48,9 @@ const AddRecipePage = () => {
         body: JSON.stringify(recipePayload),
       });
 
+      // Parse the response body to get the message from the server
+      const data = await res.json();
+
       if (res.ok) {
         toast.success("Recipe published successfully!");
         setFormData({
@@ -62,7 +64,8 @@ const AddRecipePage = () => {
           url: "",
         });
       } else {
-        toast.error("Failed to publish recipe.");
+        // This will display the specific message: "Recipe limit reached!..."
+        toast.error(data.message || "Failed to publish recipe.");
       }
     } catch (error) {
       toast.error("Server connection error.");
@@ -89,144 +92,62 @@ const AddRecipePage = () => {
           Fill in the details below to share your creation.
         </p>
 
-        <form
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="md:col-span-2">
-            <label className={labelClass}>
-              Recipe Image Link <span className="text-red-500">*</span>
-            </label>
-            <input
-              required
-              type="url"
-              placeholder="https://example.com/image.jpg"
-              onChange={(e) =>
-                setFormData({ ...formData, url: e.target.value })
-              }
-              className={inputClass}
-            />
+            <label className={labelClass}>Recipe Image Link <span className="text-red-500">*</span></label>
+            <input required type="url" value={formData.url} placeholder="https://example.com/image.jpg" 
+              onChange={(e) => setFormData({ ...formData, url: e.target.value })} className={inputClass} />
           </div>
 
           <div className="md:col-span-2">
-            <label className={labelClass}>
-              Recipe Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              required
-              placeholder="Enter recipe name"
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-              className={inputClass}
-            />
+            <label className={labelClass}>Recipe Name <span className="text-red-500">*</span></label>
+            <input required value={formData.name} placeholder="Enter recipe name" 
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })} className={inputClass} />
           </div>
 
           <div>
-            <label className={labelClass}>
-              Category <span className="text-red-500">*</span>
-            </label>
-            <select
-              required
-              onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value })
-              }
-              className={inputClass}
-            >
+            <label className={labelClass}>Category <span className="text-red-500">*</span></label>
+            <select required value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className={inputClass}>
               <option value="">Select Category</option>
-              <option>Appetizer</option>
-              <option>Main Course</option>
-              <option>Dessert</option>
-              <option>Beverage</option>
+              <option>Appetizer</option><option>Main Course</option><option>Dessert</option><option>Beverage</option>
             </select>
           </div>
 
           <div>
-            <label className={labelClass}>
-              Cuisine Type <span className="text-red-500">*</span>
-            </label>
-            <select
-              required
-              onChange={(e) =>
-                setFormData({ ...formData, cuisine: e.target.value })
-              }
-              className={inputClass}
-            >
+            <label className={labelClass}>Cuisine Type <span className="text-red-500">*</span></label>
+            <select required value={formData.cuisine} onChange={(e) => setFormData({ ...formData, cuisine: e.target.value })} className={inputClass}>
               <option value="">Select Cuisine</option>
-              <option>Italian</option>
-              <option>Mexican</option>
-              <option>Bengali</option>
-              <option>Indian</option>
-              <option>Chinese</option>
+              <option>Italian</option><option>Mexican</option><option>Bengali</option><option>Indian</option><option>Chinese</option>
             </select>
           </div>
 
           <div>
-            <label className={labelClass}>
-              Difficulty Level <span className="text-red-500">*</span>
-            </label>
-            <select
-              required
-              onChange={(e) =>
-                setFormData({ ...formData, difficulty: e.target.value })
-              }
-              className={inputClass}
-            >
+            <label className={labelClass}>Difficulty Level <span className="text-red-500">*</span></label>
+            <select required value={formData.difficulty} onChange={(e) => setFormData({ ...formData, difficulty: e.target.value })} className={inputClass}>
               <option value="">Select Difficulty</option>
-              <option>Easy</option>
-              <option>Medium</option>
-              <option>Hard</option>
+              <option>Easy</option><option>Medium</option><option>Hard</option>
             </select>
           </div>
 
           <div>
-            <label className={labelClass}>
-              Prep Time <span className="text-red-500">*</span>
-            </label>
-            <input
-              required
-              placeholder="e.g., 30 mins"
-              onChange={(e) =>
-                setFormData({ ...formData, prepTime: e.target.value })
-              }
-              className={inputClass}
-            />
+            <label className={labelClass}>Prep Time <span className="text-red-500">*</span></label>
+            <input required value={formData.prepTime} placeholder="e.g., 30 mins" 
+              onChange={(e) => setFormData({ ...formData, prepTime: e.target.value })} className={inputClass} />
           </div>
 
           <div className="md:col-span-2">
-            <label className={labelClass}>
-              Ingredients <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              required
-              rows="4"
-              placeholder="List your ingredients here..."
-              onChange={(e) =>
-                setFormData({ ...formData, ingredients: e.target.value })
-              }
-              className={inputClass}
-            ></textarea>
+            <label className={labelClass}>Ingredients <span className="text-red-500">*</span></label>
+            <textarea required rows="4" value={formData.ingredients} placeholder="List your ingredients here..." 
+              onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })} className={inputClass}></textarea>
           </div>
 
           <div className="md:col-span-2">
-            <label className={labelClass}>
-              Instructions <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              required
-              rows="4"
-              placeholder="Step-by-step instructions..."
-              onChange={(e) =>
-                setFormData({ ...formData, instructions: e.target.value })
-              }
-              className={inputClass}
-            ></textarea>
+            <label className={labelClass}>Instructions <span className="text-red-500">*</span></label>
+            <textarea required rows="4" value={formData.instructions} placeholder="Step-by-step instructions..." 
+              onChange={(e) => setFormData({ ...formData, instructions: e.target.value })} className={inputClass}></textarea>
           </div>
 
-          <button
-            type="submit"
-            className="md:col-span-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-purple-500/20"
-          >
+          <button type="submit" className="md:col-span-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-purple-500/20">
             Publish Recipe
           </button>
         </form>
